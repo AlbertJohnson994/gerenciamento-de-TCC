@@ -126,3 +126,16 @@ PRESSMAN, Roger S. Engenharia de Software. 8ª ed. São Paulo: McGraw-Hill, 2016
 SOMMERVILLE, Ian. Engenharia de Software. 9ª ed. São Paulo: Pearson, 2011.
 
 ---
+## 6. Frames: Organize by user flow
+
+Authentication/  
+  ├── Login  
+  └── Register  
+Roles/  
+  ├── Student  
+  ├── Coordinator  
+Proposals/  
+  └── Submission Form  
+Dashboards/  
+  ├── Attendee  
+  └── Admin  
