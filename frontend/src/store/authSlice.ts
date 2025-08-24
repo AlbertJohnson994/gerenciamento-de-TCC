@@ -1,6 +1,6 @@
-import { createSlice, createAsyncThunk } from '@reduxjs/toolkit';
-import { authService } from '../services/authService';
-import type { User, LoginData, RegisterData } from '../services/authService';
+import { createSlice, createAsyncThunk } from "@reduxjs/toolkit";
+import { authService } from "../services/authService";
+import type { LoginData, RegisterData, User } from "../types";
 
 interface AuthState {
   user: User | null;
@@ -9,49 +9,101 @@ interface AuthState {
   error: string | null;
 }
 
+// Get initial state from localStorage
+const storedToken = localStorage.getItem("token");
+const storedUser = localStorage.getItem("user");
+
 const initialState: AuthState = {
-  user: JSON.parse(localStorage.getItem('user') || 'null'),
-  token: localStorage.getItem('token'),
+  user: storedUser ? JSON.parse(storedUser) : null,
+  token: storedToken,
   isLoading: false,
   error: null,
 };
 
 // Async thunks
 export const login = createAsyncThunk(
-  'auth/login',
+  "auth/login",
   async (credentials: LoginData, { rejectWithValue }) => {
     try {
       return await authService.login(credentials);
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Erro no login');
+    } catch (error: unknown) {
+      let message = "Erro no login";
+      interface ErrorWithResponse {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      }
+      if (
+        error &&
+        typeof error === "object" &&
+        "response" in error &&
+        (error as ErrorWithResponse).response?.data?.message
+      ) {
+        message = (error as ErrorWithResponse).response!.data!.message!;
+      }
+      return rejectWithValue(message);
     }
   }
 );
 
 export const register = createAsyncThunk(
-  'auth/register',
-  async (userData: RegisterData, { rejectWithValue }) => {
+  "auth/register",
+  async (data: RegisterData, { rejectWithValue }) => {
     try {
-      return await authService.register(userData);
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Erro no registro');
+      return await authService.register(data);
+    } catch (error: unknown) {
+      let message = "Erro no registro";
+      interface ErrorWithResponse {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      }
+      if (
+        error &&
+        typeof error === "object" &&
+        "response" in error &&
+        (error as ErrorWithResponse).response?.data?.message
+      ) {
+        message = (error as ErrorWithResponse).response!.data!.message!;
+      }
+      return rejectWithValue(message);
     }
   }
 );
 
 export const getMe = createAsyncThunk(
-  'auth/getMe',
+  "auth/getMe",
   async (_, { rejectWithValue }) => {
     try {
       return await authService.getMe();
-    } catch (error: any) {
-      return rejectWithValue(error.response?.data?.message || 'Erro ao carregar usuário');
+    } catch (error: unknown) {
+      let message = "Erro ao carregar usuário";
+      interface ErrorWithResponse {
+        response?: {
+          data?: {
+            message?: string;
+          };
+        };
+      }
+      if (
+        error &&
+        typeof error === "object" &&
+        "response" in error &&
+        (error as ErrorWithResponse).response?.data?.message
+      ) {
+        message = (error as ErrorWithResponse).response!.data!.message!;
+      }
+      return rejectWithValue(message);
     }
   }
 );
 
 const authSlice = createSlice({
-  name: 'auth',
+  name: "auth",
   initialState,
   reducers: {
     logout: (state) => {
@@ -74,8 +126,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        localStorage.setItem('token', action.payload.token);
-        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(login.rejected, (state, action) => {
         state.isLoading = false;
@@ -90,8 +140,6 @@ const authSlice = createSlice({
         state.isLoading = false;
         state.user = action.payload.user;
         state.token = action.payload.token;
-        localStorage.setItem('token', action.payload.token);
-        localStorage.setItem('user', JSON.stringify(action.payload.user));
       })
       .addCase(register.rejected, (state, action) => {
         state.isLoading = false;

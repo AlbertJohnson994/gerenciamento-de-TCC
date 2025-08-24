@@ -1,184 +1,115 @@
-import React, { useState } from "react";
-import styled from "styled-components";
-import { useNavigate } from "react-router-dom";
-import { InputText } from "../components/InputText"; // Import your InputText component
+import React, { useState, useEffect } from 'react';
+import { useDispatch, useSelector } from 'react-redux';
+import { useNavigate } from 'react-router-dom';
+import { login, clearError } from '../store/authSlice';
+import type { AppDispatch, RootState } from '../store';
+import type { LoginData } from '../types';
 
-const LoginPage: React.FC = () => {
-  const [username, setUsername] = useState("");
-  const [password, setPassword] = useState("");
+const Login: React.FC = () => {
+  const [formData, setFormData] = useState<LoginData>({
+    email: '',
+    password: '',
+  });
+
+  const dispatch = useDispatch<AppDispatch>();
   const navigate = useNavigate();
+  const { isLoading, error, token } = useSelector(
+    (state: RootState) => state.auth
+  );
 
-  const handleLogin = (e: React.FormEvent) => {
+  // Clear error on mount
+  useEffect(() => {
+    dispatch(clearError());
+  }, [dispatch]);
+
+  // Redirect if already logged in
+  useEffect(() => {
+    if (token) {
+      navigate('/dashboard', { replace: true });
+    }
+  }, [token, navigate]);
+
+  const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    if (username && password) {
-      alert("Login successful!");
-      // Add your actual login logic here
-    } else {
-      alert("Please fill in all fields.");
+    try {
+      await dispatch(login(formData)).unwrap();
+      navigate('/dashboard', { replace: true });
+    } catch (err) {
+      console.error('Login failed:', err);
     }
   };
 
-  const handleForgotPassword = () => {
-    navigate("/forgot-password");
+  const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
+    setFormData({
+      ...formData,
+      [e.target.name]: e.target.value,
+    });
   };
 
-  const handleRegister = () => {
-    navigate("/register");
-  };
+  // Show loading message if already logged in
+  if (token) {
+    return (
+      <div className="min-h-screen flex items-center justify-center">
+        <p>Redirecionando para o dashboard...</p>
+      </div>
+    );
+  }
 
   return (
-    <PageContainer>
-      <Header>
-        <NavLink href="/">Home</NavLink>
-        <NavLink href="/register">Register</NavLink>
-      </Header>
+    <div className="min-h-screen flex items-center justify-center bg-gray-100">
+      <div className="form-container">
+        <form onSubmit={handleSubmit}>
+          <h2 className="text-2xl font-bold mb-6 text-center">Login</h2>
 
-      <LoginContainer>
-        <Logo>Logo</Logo>
-        <Title>Login</Title>
-        <Subtitle>sign into your account</Subtitle>
+          {error && <div className="error-message">{error}</div>}
 
-        <form onSubmit={handleLogin}>
-          <FormContainer>
-            <InputText
-              label="Username"
-              value={username}
-              onChange={(e) => setUsername(e.target.value)}
-              placeholder="Enter your username"
-              img="https://cdn-icons-png.flaticon.com/512/847/847969.png" // User icon
+          <div className="form-group">
+            <label>Email:</label>
+            <input
+              type="email"
+              name="email"
+              value={formData.email}
+              onChange={handleChange}
+              required
             />
+          </div>
 
-            <InputText
-              label="Password"
+          <div className="form-group">
+            <label>Senha:</label>
+            <input
               type="password"
-              value={password}
-              onChange={(e) => setPassword(e.target.value)}
-              placeholder="Enter your password"
-              img="https://cdn-icons-png.flaticon.com/512/3064/3064155.png" // Lock icon
+              name="password"
+              value={formData.password}
+              onChange={handleChange}
+              required
             />
+          </div>
 
-            <LoginButton type="submit">Login</LoginButton>
+          <button 
+            type="submit" 
+            className="btn btn-primary w-full" 
+            disabled={isLoading}
+          >
+            {isLoading ? 'Carregando...' : 'Entrar'}
+          </button>
 
-            <ForgotPassword onClick={handleForgotPassword}>
-              I forgot my password. Click Here to reset.
-            </ForgotPassword>
+          <p 
+            className="text-blue-600 cursor-pointer mt-3 text-center"
+            onClick={() => navigate('/forgot-password')}
+          >
+            Esqueci minha senha
+          </p>
 
-            <RegisterButton type="button" onClick={handleRegister}>
-              Register New Account
-            </RegisterButton>
-          </FormContainer>
+          <p 
+            className="text-blue-600 cursor-pointer mt-2 text-center"
+            onClick={() => navigate('/register')}
+          >
+            Criar nova conta
+          </p>
         </form>
-      </LoginContainer>
-    </PageContainer>
+      </div>
+    </div>
   );
 };
 
-export default LoginPage;
-
-// Styled Components (remove the duplicate InputText style)
-const PageContainer = styled.div`
-  min-height: 100vh;
-  background-color: #f5f5f5;
-  font-family: Arial, sans-serif;
-`;
-
-const Header = styled.header`
-  display: flex;
-  justify-content: flex-end;
-  padding: 20px;
-  background-color: white;
-  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
-`;
-
-const NavLink = styled.a`
-  margin-left: 20px;
-  color: #333;
-  text-decoration: none;
-  font-weight: 500;
-
-  &:hover {
-    color: #0066cc;
-    text-decoration: underline;
-  }
-`;
-
-const LoginContainer = styled.div`
-  max-width: 400px;
-  margin: 50px auto;
-  padding: 30px;
-  background-color: white;
-  border-radius: 8px;
-  box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-  text-align: center;
-`;
-
-const Logo = styled.div`
-  font-size: 24px;
-  font-weight: bold;
-  margin-bottom: 20px;
-`;
-
-const Title = styled.h1`
-  font-size: 24px;
-  margin-bottom: 5px;
-  color: #333;
-`;
-
-const Subtitle = styled.p`
-  color: #666;
-  margin-bottom: 30px;
-`;
-
-const FormContainer = styled.div`
-  display: flex;
-  flex-direction: column;
-  gap: 20px;
-  text-align: left;
-`;
-
-const LoginButton = styled.button`
-  padding: 12px;
-  background-color: #0066cc;
-  color: white;
-  border: none;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: background-color 0.2s;
-  margin-top: 10px;
-
-  &:hover {
-    background-color: #0052a3;
-  }
-`;
-
-const ForgotPassword = styled.button`
-  background: none;
-  border: none;
-  color: #0066cc;
-  cursor: pointer;
-  font-size: 14px;
-  text-decoration: underline;
-  margin-top: 10px;
-  padding: 0;
-
-  &:hover {
-    color: #004080;
-  }
-`;
-
-const RegisterButton = styled.button`
-  padding: 12px;
-  background-color: white;
-  color: #0066cc;
-  border: 1px solid #0066cc;
-  border-radius: 4px;
-  font-size: 16px;
-  cursor: pointer;
-  transition: all 0.2s;
-  margin-top: 20px;
-
-  &:hover {
-    background-color: #f0f7ff;
-  }
-`;
+export default Login;

@@ -1,13 +1,1081 @@
-<!doctype html>
-<html lang="en">
+<!-- <!doctype html>
+<html lang="pt-BR">
   <head>
     <meta charset="UTF-8" />
     <link rel="icon" type="image/svg+xml" href="/vite.svg" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Vite + React + TS</title>
+    <title>Sistema de Gerenciamento de TCC</title>
   </head>
   <body>
     <div id="root"></div>
     <script type="module" src="/src/main.tsx"></script>
   </body>
-</html>
+</html> -->
+
+<!-- 
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Registro Acadêmico</title>
+  <style>
+    :root {
+      --primary: #4a6bff;
+      --primary-dark: #3a5be0;
+      --secondary: #6a11cb;
+      --error: #d32f2f;
+      --success: #2e7d32;
+      --warning: #f57c00;
+      --gray-light: #f5f5f5;
+      --gray: #9e9e9e;
+      --gray-dark: #424242;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background: linear-gradient(135deg, var(--secondary) 0%, var(--primary) 100%);
+      display: flex;
+      justify-content: center;
+      align-items: center;
+      min-height: 100vh;
+      padding: 20px;
+    }
+
+    .container {
+      background: white;
+      border-radius: 12px;
+      box-shadow: 0 10px 30px rgba(0, 0, 0, 0.2);
+      width: 100%;
+      max-width: 450px;
+      overflow: hidden;
+      animation: fadeIn 0.5s ease-out;
+    }
+
+    @keyframes fadeIn {
+      from {
+        opacity: 0;
+        transform: translateY(-20px);
+      }
+
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .header {
+      background: var(--primary);
+      color: white;
+      padding: 25px;
+      text-align: center;
+    }
+
+    .header h2 {
+      font-weight: 600;
+      font-size: 24px;
+    }
+
+    .form-container {
+      padding: 30px;
+    }
+
+    .demo-warning {
+      background: #fff3cd;
+      color: #856404;
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      border-left: 4px solid #ffc107;
+      display: flex;
+      align-items: center;
+    }
+
+    .demo-warning svg {
+      margin-right: 10px;
+      min-width: 20px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    .form-group label {
+      display: block;
+      margin-bottom: 8px;
+      font-weight: 500;
+      color: var(--gray-dark);
+    }
+
+    .form-group input,
+    .form-group select {
+      width: 100%;
+      padding: 14px;
+      border: 1px solid #ddd;
+      border-radius: 8px;
+      font-size: 16px;
+      transition: all 0.3s;
+    }
+
+    .form-group input:focus,
+    .form-group select:focus {
+      border-color: var(--primary);
+      outline: none;
+      box-shadow: 0 0 0 2px rgba(74, 107, 255, 0.2);
+    }
+
+    .btn {
+      width: 100%;
+      padding: 14px;
+      background: var(--primary);
+      color: white;
+      border: none;
+      border-radius: 8px;
+      font-size: 16px;
+      font-weight: 600;
+      cursor: pointer;
+      transition: background 0.3s;
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+
+    .btn:hover {
+      background: var(--primary-dark);
+    }
+
+    .btn:disabled {
+      background: var(--gray);
+      cursor: not-allowed;
+    }
+
+    .btn-loading {
+      display: inline-block;
+      width: 20px;
+      height: 20px;
+      border: 3px solid rgba(255, 255, 255, 0.3);
+      border-radius: 50%;
+      border-top-color: white;
+      animation: spin 1s ease-in-out infinite;
+      margin-right: 10px;
+    }
+
+    @keyframes spin {
+      to {
+        transform: rotate(360deg);
+      }
+    }
+
+    .login-link {
+      text-align: center;
+      margin-top: 20px;
+      color: var(--primary);
+      cursor: pointer;
+      font-weight: 500;
+      transition: color 0.3s;
+    }
+
+    .login-link:hover {
+      color: var(--primary-dark);
+      text-decoration: underline;
+    }
+
+    .error-message {
+      background: #ffebee;
+      color: var(--error);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+
+    .error-message svg {
+      margin-right: 10px;
+      min-width: 20px;
+    }
+
+    .success-message {
+      background: #e8f5e9;
+      color: var(--success);
+      padding: 12px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+      display: flex;
+      align-items: center;
+    }
+
+    .success-message svg {
+      margin-right: 10px;
+      min-width: 20px;
+    }
+
+    .matriculation-info {
+      background: #e3f2fd;
+      padding: 12px;
+      border-radius: 8px;
+      margin-top: 10px;
+      font-size: 14px;
+      color: #1565c0;
+    }
+
+    .footer {
+      text-align: center;
+      margin-top: 30px;
+      padding-top: 20px;
+      border-top: 1px solid #eee;
+      color: var(--gray);
+      font-size: 12px;
+    }
+
+    @media (max-width: 480px) {
+      .form-container {
+        padding: 20px;
+      }
+
+      .header {
+        padding: 20px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <div class="container">
+    <div class="header">
+      <h2>Registro</h2>
+    </div>
+
+    <div class="form-container">
+      <div class="demo-warning">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <span>Esta é uma versão de demonstração. Para uma experiência completa, execute em localhost.</span>
+      </div>
+
+      <div id="errorMessage" class="error-message" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M8.982 1.566a1.13 1.13 0 0 0-1.96 0L.165 13.233c-.457.778.091 1.767.98 1.767h13.713c.889 0 1.438-.99.98-1.767L8.982 1.566zM8 5c.535 0 .954.462.9.995l-.35 3.507a.552.552 0 0 1-1.1 0L7.1 5.995A.905.905 0 0 1 8 5zm.002 6a1 1 0 1 1 0 2 1 1 0 0 1 0-2z" />
+        </svg>
+        <span id="errorText"></span>
+      </div>
+
+      <div id="successMessage" class="success-message" style="display: none;">
+        <svg xmlns="http://www.w3.org/2000/svg" width="16" height="16" fill="currentColor" viewBox="0 0 16 16">
+          <path
+            d="M16 8A8 8 0 1 1 0 8a8 8 0 0 1 16 0zm-3.97-3.03a.75.75 0 0 0-1.08.022L7.477 9.417 5.384 7.323a.75.75 0 0 0-1.06 1.06L6.97 11.03a.75.75 0 0 0 1.079-.02l3.992-4.99a.75.75 0 0 0-.01-1.05z" />
+        </svg>
+        <span id="successText"></span>
+      </div>
+
+      <form id="registerForm">
+        <div class="form-group">
+          <label for="name">Nome:</label>
+          <input type="text" id="name" name="name" required autocomplete="name">
+        </div>
+
+        <div class="form-group">
+          <label for="email">Email:</label>
+          <input type="email" id="email" name="email" required autocomplete="email">
+        </div>
+
+        <div class="form-group">
+          <label for="password">Senha:</label>
+          <input type="password" id="password" name="password" required autocomplete="new-password">
+        </div>
+
+        <div class="form-group">
+          <label for="role">Função:</label>
+          <select id="role" name="role" required>
+            <option value="STUDENT">Estudante</option>
+            <option value="ORIENTADOR">Orientador</option>
+            <option value="ADMIN">Administrador</option>
+          </select>
+        </div>
+
+        <div class="form-group">
+          <label for="matriculation">Matrícula:</label>
+          <input type="text" id="matriculation" name="matriculation" required autocomplete="off">
+          <div class="matriculation-info">
+            Para estudantes, digite sua matrícula. Outros usuários, digite "N/A".
+          </div>
+        </div>
+
+        <button type="submit" class="btn" id="submitBtn">
+          <span id="btnText">Registrar</span>
+        </button>
+      </form>
+
+      <div class="login-link" id="loginLink">Já tenho uma conta</div>
+
+      <div class="footer">
+        Sistema Acadêmico v3.0.2 &copy; 2023
+      </div>
+    </div>
+  </div>
+
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const registerForm = document.getElementById('registerForm');
+      const errorMessage = document.getElementById('errorMessage');
+      const errorText = document.getElementById('errorText');
+      const successMessage = document.getElementById('successMessage');
+      const successText = document.getElementById('successText');
+      const submitBtn = document.getElementById('submitBtn');
+      const btnText = document.getElementById('btnText');
+      const loginLink = document.getElementById('loginLink');
+      const roleSelect = document.getElementById('role');
+      const matriculationInput = document.getElementById('matriculation');
+
+      // Ajustar o campo de matrícula com base na função selecionada
+      roleSelect.addEventListener('change', function () {
+        if (this.value === 'STUDENT') {
+          matriculationInput.placeholder = "Digite sua matrícula";
+          matriculationInput.value = "";
+        } else {
+          matriculationInput.placeholder = "N/A";
+          matriculationInput.value = "N/A";
+        }
+      });
+
+      // Gerar uma matrícula automática se for estudante
+      function generateMatriculation() {
+        const prefix = 'STU';
+        const randomNum = Math.floor(10000 + Math.random() * 90000);
+        return `${prefix}${randomNum}`;
+      }
+
+      // Manipular o envio do formulário
+      registerForm.addEventListener('submit', async function (e) {
+        e.preventDefault();
+
+        // Obter os valores do formulário
+        const formData = {
+          name: document.getElementById('name').value,
+          email: document.getElementById('email').value,
+          password: document.getElementById('password').value,
+          role: document.getElementById('role').value,
+          matriculation: document.getElementById('matriculation').value
+        };
+
+        // Validar a matrícula
+        if (formData.role === 'STUDENT' && (!formData.matriculation || formData.matriculation.trim() === '')) {
+          showError('Por favor, digite uma matrícula válida para estudantes.');
+          return;
+        }
+
+        // Se for estudante e não digitou matrícula, gerar automaticamente
+        if (formData.role === 'STUDENT' && (!formData.matriculation || formData.matriculation.trim() === '')) {
+          formData.matriculation = generateMatriculation();
+          document.getElementById('matriculation').value = formData.matriculation;
+        }
+
+        // Se não for estudante, definir matrícula como "N/A"
+        if (formData.role !== 'STUDENT' && (!formData.matriculation || formData.matriculation.trim() === '')) {
+          formData.matriculation = 'N/A';
+          document.getElementById('matriculation').value = 'N/A';
+        }
+
+        // Simular o processo de registro
+        setLoadingState(true);
+
+        try {
+          // Simular uma chamada à API
+          await new Promise(resolve => setTimeout(resolve, 2000));
+
+          // Simular sucesso no registro
+          showSuccess('Registro realizado com sucesso! Redirecionando para o dashboard...');
+
+          // Simular redirecionamento após registro bem-sucedido
+          setTimeout(() => {
+            window.location.href = '/dashboard';
+          }, 2500);
+
+        } catch (err) {
+          showError('Erro no registro: ' + err.message);
+          setLoadingState(false);
+        }
+      });
+
+      // Função para exibir mensagens de erro
+      function showError(message) {
+        errorText.textContent = message;
+        errorMessage.style.display = 'flex';
+        successMessage.style.display = 'none';
+
+        // Rolagem suave para a mensagem de erro
+        errorMessage.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Função para exibir mensagens de sucesso
+      function showSuccess(message) {
+        successText.textContent = message;
+        successMessage.style.display = 'flex';
+        errorMessage.style.display = 'none';
+
+        // Rolagem suave para a mensagem de sucesso
+        successMessage.scrollIntoView({ behavior: 'smooth' });
+      }
+
+      // Configurar estado de carregamento
+      function setLoadingState(isLoading) {
+        if (isLoading) {
+          submitBtn.disabled = true;
+          btnText.innerHTML = '<div class="btn-loading"></div> Registrando...';
+        } else {
+          submitBtn.disabled = false;
+          btnText.textContent = 'Registrar';
+        }
+      }
+
+      // Redirecionar para a página de login
+      loginLink.addEventListener('click', function () {
+        window.location.href = '/login';
+      });
+
+      // Inicializar o campo de matrícula
+      if (roleSelect.value === 'STUDENT') {
+        matriculationInput.placeholder = "Digite sua matrícula";
+      } else {
+        matriculationInput.placeholder = "N/A";
+        matriculationInput.value = "N/A";
+      }
+    });
+  </script>
+</body>
+
+</html> -->
+
+
+<!DOCTYPE html>
+<html lang="pt-BR">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Sistema de Gerenciamento de TCC</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+  <style>
+    :root {
+      --primary: #3498db;
+      --secondary: #2c3e50;
+      --success: #2ecc71;
+      --warning: #f39c12;
+      --danger: #e74c3c;
+      --light: #ecf0f1;
+      --dark: #2c3e50;
+      --gray: #7f8c8d;
+    }
+
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    }
+
+    body {
+      background-color: #f5f7fa;
+      color: var(--dark);
+      line-height: 1.6;
+    }
+
+    .container {
+      max-width: 1200px;
+      margin: 0 auto;
+      padding: 20px;
+    }
+
+    header {
+      background: linear-gradient(135deg, var(--primary), var(--secondary));
+      color: white;
+      padding: 1rem 0;
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    }
+
+    nav {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      padding: 0 20px;
+    }
+
+    .logo {
+      font-size: 1.8rem;
+      font-weight: bold;
+      display: flex;
+      align-items: center;
+    }
+
+    .logo i {
+      margin-right: 10px;
+    }
+
+    .user-info {
+      display: flex;
+      align-items: center;
+    }
+
+    .user-info img {
+      width: 40px;
+      height: 40px;
+      border-radius: 50%;
+      margin-right: 10px;
+    }
+
+    .main-content {
+      display: flex;
+      margin-top: 20px;
+      min-height: calc(100vh - 180px);
+    }
+
+    .sidebar {
+      width: 250px;
+      background: var(--secondary);
+      color: white;
+      border-radius: 10px;
+      padding: 20px;
+      margin-right: 20px;
+    }
+
+    .sidebar h3 {
+      margin-bottom: 20px;
+      padding-bottom: 10px;
+      border-bottom: 1px solid rgba(255, 255, 255, 0.2);
+    }
+
+    .sidebar ul {
+      list-style: none;
+    }
+
+    .sidebar li {
+      margin-bottom: 10px;
+    }
+
+    .sidebar a {
+      color: white;
+      text-decoration: none;
+      display: block;
+      padding: 10px;
+      border-radius: 5px;
+      transition: background 0.3s;
+    }
+
+    .sidebar a:hover,
+    .sidebar a.active {
+      background: var(--primary);
+    }
+
+    .sidebar i {
+      margin-right: 10px;
+      width: 20px;
+      text-align: center;
+    }
+
+    .content {
+      flex: 1;
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+    }
+
+    .card {
+      background: white;
+      border-radius: 10px;
+      box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+      padding: 30px;
+      margin-bottom: 30px;
+    }
+
+    h1 {
+      color: var(--primary);
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      color: var(--secondary);
+      margin-bottom: 15px;
+    }
+
+    .form-group {
+      margin-bottom: 20px;
+    }
+
+    label {
+      display: block;
+      margin-bottom: 5px;
+      font-weight: 600;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 12px;
+      border: 1px solid #ddd;
+      border-radius: 5px;
+      font-size: 16px;
+    }
+
+    textarea {
+      min-height: 120px;
+      resize: vertical;
+    }
+
+    button {
+      background: var(--primary);
+      color: white;
+      border: none;
+      padding: 12px 20px;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: 600;
+      transition: background 0.3s;
+    }
+
+    button:hover {
+      background: var(--secondary);
+    }
+
+    .btn-success {
+      background: var(--success);
+    }
+
+    .btn-warning {
+      background: var(--warning);
+    }
+
+    .btn-danger {
+      background: var(--danger);
+    }
+
+    .filters {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 20px;
+    }
+
+    .filters button {
+      flex: 1;
+    }
+
+    .proposal-list {
+      margin-top: 20px;
+    }
+
+    .proposal-item {
+      border: 1px solid #eee;
+      border-radius: 5px;
+      padding: 15px;
+      margin-bottom: 15px;
+      background: var(--light);
+    }
+
+    .proposal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 10px;
+    }
+
+    .proposal-title {
+      font-weight: bold;
+      font-size: 18px;
+      color: var(--dark);
+    }
+
+    .proposal-status {
+      padding: 5px 10px;
+      border-radius: 20px;
+      font-size: 14px;
+      font-weight: 600;
+    }
+
+    .status-pending {
+      background: #ffeaa7;
+      color: #d35400;
+    }
+
+    .status-approved {
+      background: #b8f7b8;
+      color: #27ae60;
+    }
+
+    .status-rejected {
+      background: #ffc9c9;
+      color: #c0392b;
+    }
+
+    .proposal-meta {
+      display: flex;
+      gap: 15px;
+      margin-bottom: 10px;
+      font-size: 14px;
+      color: var(--gray);
+    }
+
+    .proposal-actions {
+      display: flex;
+      gap: 10px;
+      margin-top: 10px;
+    }
+
+    .proposal-actions button {
+      padding: 8px 15px;
+      font-size: 14px;
+    }
+
+    .hidden {
+      display: none;
+    }
+
+    footer {
+      text-align: center;
+      padding: 20px;
+      margin-top: 40px;
+      color: var(--gray);
+      border-top: 1px solid #dee2e6;
+    }
+
+    .notification {
+      position: fixed;
+      top: 20px;
+      right: 20px;
+      padding: 15px 20px;
+      border-radius: 5px;
+      color: white;
+      background: var(--success);
+      box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+      z-index: 1000;
+      display: flex;
+      align-items: center;
+      gap: 10px;
+    }
+
+    .notification.error {
+      background: var(--danger);
+    }
+
+    @media (max-width: 768px) {
+      .main-content {
+        flex-direction: column;
+      }
+
+      .sidebar {
+        width: 100%;
+        margin-right: 0;
+        margin-bottom: 20px;
+      }
+
+      .filters {
+        flex-direction: column;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <header>
+    <nav>
+      <div class="logo">
+        <i class="fas fa-graduation-cap"></i>
+        Sistema TCC
+      </div>
+      <div class="user-info">
+        <img src="https://ui-avatars.com/api/?name=Usuario&background=random" alt="User">
+        <span>João Silva (Estudante)</span>
+      </div>
+    </nav>
+  </header>
+
+  <div class="container">
+    <div class="main-content">
+      <div class="sidebar">
+        <h3>Menu</h3>
+        <ul>
+          <li><a href="#" class="active"><i class="fas fa-home"></i> Dashboard</a></li>
+          <li><a href="#"><i class="fas fa-project-diagram"></i> Meu Projeto</a></li>
+          <li><a href="#"><i class="fas fa-comments"></i> Feedback</a></li>
+          <li><a href="#"><i class="fas fa-cog"></i> Configurações</a></li>
+          <li><a href="#"><i class="fas fa-sign-out-alt"></i> Sair</a></li>
+        </ul>
+
+        <h3>Filtrar por Status</h3>
+        <ul>
+          <li><a href="#"><i class="fas fa-clock"></i> Pendentes</a></li>
+          <li><a href="#"><i class="fas fa-check"></i> Aprovados</a></li>
+          <li><a href="#"><i class="fas fa-times"></i> Rejeitados</a></li>
+        </ul>
+      </div>
+
+      <div class="content">
+        <h1>Gerenciamento de TCC</h1>
+
+        <div class="card">
+          <h2>Enviar Nova Proposta</h2>
+          <form id="proposalForm">
+            <div class="form-group">
+              <label for="title">Título do Projeto</label>
+              <input type="text" id="title" name="title" required>
+            </div>
+
+            <div class="form-group">
+              <label for="description">Descrição do Projeto</label>
+              <textarea id="description" name="description" required></textarea>
+            </div>
+
+            <div class="form-group">
+              <label for="area">Área de Conhecimento</label>
+              <select id="area" name="area" required>
+                <option value="">Selecione uma área</option>
+                <option value="engenharia">Engenharia</option>
+                <option value="computacao">Ciência da Computação</option>
+                <option value="administracao">Administração</option>
+                <option value="direito">Direito</option>
+                <option value="medicina">Medicina</option>
+              </select>
+            </div>
+
+            <div class="form-group">
+              <label for="document">Anexar Documento (PDF)</label>
+              <input type="file" id="document" name="document" accept=".pdf" required>
+            </div>
+
+            <button type="submit"><i class="fas fa-paper-plane"></i> Enviar Proposta</button>
+          </form>
+        </div>
+
+        <div class="card">
+          <h2>Minhas Propostas</h2>
+
+          <div class="filters">
+            <button class="active">Todas</button>
+            <button>Pendentes</button>
+            <button>Aprovadas</button>
+            <button>Rejeitadas</button>
+          </div>
+
+          <div class="proposal-list">
+            <div class="proposal-item">
+              <div class="proposal-header">
+                <div class="proposal-title">Sistema de Gestão Acadêmica com IA</div>
+                <div class="proposal-status status-approved">Aprovado</div>
+              </div>
+              <div class="proposal-meta">
+                <span><i class="fas fa-calendar"></i> 15/08/2023</span>
+                <span><i class="fas fa-tag"></i> Ciência da Computação</span>
+                <span><i class="fas fa-user"></i> Prof. Maria Santos</span>
+              </div>
+              <p>Desenvolvimento de um sistema inteligente para auxiliar na gestão acadêmica de universidades utilizando
+                técnicas de aprendizado de máquina.</p>
+              <div class="proposal-actions">
+                <button class="btn-success"><i class="fas fa-eye"></i> Ver Detalhes</button>
+                <button><i class="fas fa-download"></i> Baixar PDF</button>
+              </div>
+            </div>
+
+            <div class="proposal-item">
+              <div class="proposal-header">
+                <div class="proposal-title">Análise de Dados para Melhoria no Ensino</div>
+                <div class="proposal-status status-pending">Pendente</div>
+              </div>
+              <div class="proposal-meta">
+                <span><i class="fas fa-calendar"></i> 22/09/2023</span>
+                <span><i class="fas fa-tag"></i> Engenharia</span>
+                <span><i class="fas fa-user"></i> Prof. Carlos Oliveira</span>
+              </div>
+              <p>Utilização de técnicas de análise de dados para identificar pontos de melhoria no processo de ensino e
+                aprendizagem em cursos de engenharia.</p>
+              <div class="proposal-actions">
+                <button class="btn-success"><i class="fas fa-eye"></i> Ver Detalhes</button>
+                <button><i class="fas fa-edit"></i> Editar</button>
+              </div>
+            </div>
+
+            <div class="proposal-item">
+              <div class="proposal-header">
+                <div class="proposal-title">Framework para IoT em Ambientes Educacionais</div>
+                <div class="proposal-status status-rejected">Rejeitado</div>
+              </div>
+              <div class="proposal-meta">
+                <span><i class="fas fa-calendar"></i> 05/07/2023</span>
+                <span><i class="fas fa-tag"></i> Computação</span>
+                <span><i class="fas fa-user"></i> Prof. Ana Costa</span>
+              </div>
+              <p>Desenvolvimento de um framework para implementação de soluções de Internet das Coisas em ambientes
+                educacionais.</p>
+              <div class="proposal-actions">
+                <button class="btn-success"><i class="fas fa-eye"></i> Ver Detalhes</button>
+                <button><i class="fas fa-comment"></i> Ver Feedback</button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <p>&copy; 2023 Sistema de Gerenciamento de TCC - Universidade Acadêmica</p>
+  </footer>
+
+  <script>
+    // Firebase configuration (replace with your actual config)
+  const firebaseConfig = {
+  apiKey: "AIzaSyD2a7Kl15tgsiV-jIbBOvLDewn3ZvtIzGE",
+  authDomain: "sistema-tcc-management.firebaseapp.com",
+  projectId: "sistema-tcc-management",
+  storageBucket: "sistema-tcc-management.firebasestorage.app",
+  messagingSenderId: "655597612582",
+  appId: "1:655597612582:web:b5592b0dce35f14f4b80e7",
+};
+
+
+    // Initialize Firebase (commented out for safety)
+    // firebase.initializeApp(firebaseConfig);
+
+    // DOM elements
+    const proposalForm = document.getElementById('proposalForm');
+    const filters = document.querySelectorAll('.filters button');
+
+    // Event listeners
+    proposalForm.addEventListener('submit', function (e) {
+      e.preventDefault();
+
+      // Get form values
+      const title = document.getElementById('title').value;
+      const description = document.getElementById('description').value;
+      const area = document.getElementById('area').value;
+      const document = document.getElementById('document').files[0];
+
+      // Simulate proposal submission
+      simulateProposalSubmission(title, description, area, document);
+    });
+
+    // Add active class to filter buttons
+    filters.forEach(button => {
+      button.addEventListener('click', function () {
+        filters.forEach(btn => btn.classList.remove('active'));
+        this.classList.add('active');
+
+        // Here you would filter proposals based on status
+        const status = this.textContent.toLowerCase();
+        filterProposals(status);
+      });
+    });
+
+    // Simulate proposal submission
+    function simulateProposalSubmission(title, description, area, document) {
+      // Show loading state
+      const submitBtn = proposalForm.querySelector('button');
+      const originalText = submitBtn.innerHTML;
+      submitBtn.innerHTML = '<i class="fas fa-spinner fa-spin"></i> Enviando...';
+      submitBtn.disabled = true;
+
+      // Simulate API call delay
+      setTimeout(() => {
+        // Show success notification
+        showNotification('Proposta enviada com sucesso! Aguarde a avaliação.', 'success');
+
+        // Reset form
+        proposalForm.reset();
+
+        // Restore button
+        submitBtn.innerHTML = originalText;
+        submitBtn.disabled = false;
+
+        // Add new proposal to the list (in a real app, this would come from the server)
+        addNewProposalToList(title, description, area);
+      }, 2000);
+    }
+
+    // Filter proposals by status
+    function filterProposals(status) {
+      const proposals = document.querySelectorAll('.proposal-item');
+
+      proposals.forEach(proposal => {
+        const proposalStatus = proposal.querySelector('.proposal-status').textContent.toLowerCase();
+
+        if (status === 'todas') {
+          proposal.style.display = 'block';
+        } else {
+          if (proposalStatus.includes(status)) {
+            proposal.style.display = 'block';
+          } else {
+            proposal.style.display = 'none';
+          }
+        }
+      });
+    }
+
+    // Add new proposal to the list
+    function addNewProposalToList(title, description, area) {
+      const proposalList = document.querySelector('.proposal-list');
+
+      const newProposal = document.createElement('div');
+      newProposal.className = 'proposal-item';
+      newProposal.innerHTML = `
+                <div class="proposal-header">
+                    <div class="proposal-title">${title}</div>
+                    <div class="proposal-status status-pending">Pendente</div>
+                </div>
+                <div class="proposal-meta">
+                    <span><i class="fas fa-calendar"></i> ${new Date().toLocaleDateString('pt-BR')}</span>
+                    <span><i class="fas fa-tag"></i> ${area}</span>
+                    <span><i class="fas fa-user"></i> Aguardando orientador</span>
+                </div>
+                <p>${description}</p>
+                <div class="proposal-actions">
+                    <button class="btn-success"><i class="fas fa-eye"></i> Ver Detalhes</button>
+                    <button><i class="fas fa-edit"></i> Editar</button>
+                </div>
+            `;
+
+      proposalList.prepend(newProposal);
+    }
+
+    // Show notification
+    function showNotification(message, type = 'success') {
+      const notification = document.createElement('div');
+      notification.className = `notification ${type === 'error' ? 'error' : ''}`;
+      notification.innerHTML = `
+                <i class="fas ${type === 'error' ? 'fa-exclamation-circle' : 'fa-check-circle'}"></i>
+                ${message}
+            `;
+
+      document.body.appendChild(notification);
+
+      // Remove notification after 3 seconds
+      setTimeout(() => {
+        notification.remove();
+      }, 3000);
+    }
+
+    // Initialize page
+    document.addEventListener('DOMContentLoaded', function () {
+      // Here you would check user authentication and role
+      // For demo purposes, we're simulating a student view
+
+      // Load user's proposals
+      // In a real app, this would come from Firebase
+      console.log('Página carregada. Conectando ao Firebase...');
+    });
+  </script>
+</body>
+
+</html> 

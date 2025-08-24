@@ -1,22 +1,35 @@
-import app from './app';
-import { PrismaClient } from '@prisma/client';
-import { router as authRoutes } from './routes/auth';
+import app from "./app";
+import { initializeAdmin } from "./firebase/config";
 
-const prisma = new PrismaClient();
 const PORT = process.env.PORT || 3001;
 
-async function startServer() {
+const startServer = async () => {
   try {
-    await prisma.$connect();
-    console.log('✅ Connected to database');
-    
+    // Inicializar Firebase Admin
+    initializeAdmin();
+    console.log("✅ Firebase Admin inicializado");
+
+    // Iniciar servidor
     app.listen(PORT, () => {
-      console.log(`🚀 Server running on http://localhost:${PORT}`);
+      console.log(`🚀 Servidor rodando na porta ${PORT}`);
+      console.log(`📊 Health check: http://localhost:${PORT}/api/health`);
+      console.log(`🔥 Usando Firebase como banco de dados`);
     });
   } catch (error) {
-    console.error('❌ Failed to start server:', error);
+    console.error("❌ Erro ao iniciar servidor:", error);
     process.exit(1);
   }
-}
+};
+
+// Graceful shutdown
+process.on("SIGINT", async () => {
+  console.log("🛑 Desligando servidor gracefully...");
+  process.exit(0);
+});
+
+process.on("SIGTERM", async () => {
+  console.log("🛑 Recebido sinal de término...");
+  process.exit(0);
+});
 
 startServer();
